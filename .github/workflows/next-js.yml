@@ -1,0 +1,35 @@
+name: Next.js CI
+
+on:
+  push:
+    branches: [main, 'feature/**']
+    paths:
+      - 'next-js/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x # Specify the Node.js version you want to use
+
+    - name: Install dependencies
+      run: npm ci
+      working-directory: ./next-js
+
+    - name: Build
+      run: npm run build
+      working-directory: ./next-js
+
+    - name: Run tests
+      run: npm test
+      working-directory: ./next-js
+
+    - name: Lint
+      run: npm run lint
+      working-directory: ./next-js
